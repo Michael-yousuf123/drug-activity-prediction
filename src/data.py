@@ -28,3 +28,5 @@ def data_preprocess(url: str = None, type: str =None):
             lines[int(val)] = 1
         features.append(lines)
     return features, label
+if __name__ == '__main__':
+    data_preprocess()
