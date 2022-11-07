@@ -7,7 +7,7 @@ from sklearn import manifold
 class DimensionalityReduction(BaseEstimator, TransformerMixin):
     """class to compute dimensionality reduction"""
 
-    def __init__(self, types,K: int = None, N = 5):
+    def __init__(self, types, K , N):
         """function to initialize the instance 
         attributes of the class 
         ------------
@@ -21,7 +21,7 @@ class DimensionalityReduction(BaseEstimator, TransformerMixin):
         self.nonlinear = None
         self._types = types
         self._N = N
-        self._K = K
+        self.K = K
         for idx, item in enumerate(types):
             for linear in item:
                 if "pca" in linear:
@@ -30,9 +30,9 @@ class DimensionalityReduction(BaseEstimator, TransformerMixin):
                     self.lda = LinearDiscriminantAnalysis()
             for nonlinear in item:
                 if "isomap" in nonlinear:
-                    self.isomap = manifold.Isomap(N, K[idx])
+                    self.isomap = manifold.Isomap()
                 if "lle" in nonlinear:
-                    self.lle = manifold.LocallyLinearEmbedding(N, K[idx])
+                    self.lle = manifold.LocallyLinearEmbedding()
     
     def fit(self, X, y = None):
         """
@@ -64,4 +64,4 @@ class DimensionalityReduction(BaseEstimator, TransformerMixin):
         self.fit(X, y)
         return self.transform(X)
 if __name__ == '__main__':
-    ensemble = DimensionalityReduction()
+    ensemble = DimensionalityReduction(['pca'], [2], [1])

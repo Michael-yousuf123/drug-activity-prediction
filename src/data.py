@@ -37,7 +37,7 @@ def data_preprocess(data, type: str):
         label = []
         columns = [re.sub(r'[^\w]', ' ',l).split() for l in lines]
     for col in columns:
-        lines = [0]*10001
+        lines = [0]*100001
         for idx, val in enumerate(col):
             lines[int(val)] = 1
         features.append(lines)
