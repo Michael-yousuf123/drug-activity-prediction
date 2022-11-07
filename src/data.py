@@ -26,17 +26,18 @@ def data_preprocess(data, type: str):
 
     with open(data, 'r') as f:
         lines = f.readlines()
-    
-    if type == 'train':
-        label = [l[0] for l in lines] # indexing of the first column from each line
-
-        label[(i for i, x in enumerate(label) if x == 0)] = -1  # type: ignore
+    if type == "train":
+        labels = [int(l[0]) for l in lines]
+        for index, item in enumerate(labels):
+            if (item == 0):
+                labels[index] = -1
         columns = [re.sub(r'[^\w]', ' ',l[1:]).split() for l in lines]
+         
     else:
         label = []
         columns = [re.sub(r'[^\w]', ' ',l).split() for l in lines]
     for col in columns:
-        lines = [0]*100000
+        lines = [0]*10001
         for idx, val in enumerate(col):
             lines[int(val)] = 1
         features.append(lines)
