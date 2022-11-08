@@ -1,8 +1,6 @@
 import re
 import os
 from pathlib import Path
-import numpy as np 
-import pandas as pd
 import configparser
 #------------------------------------------------------------
 path = Path(__file__)
@@ -11,8 +9,8 @@ config_path = os.path.join(ROOT_DIR, "config.ini")
 #------------------------------------------------------------
 config = configparser.ConfigParser()
 config.read('config.ini')
-train_url = config.get('URLPATH', 'train_url')
-test_url = config.get('URLPATH', 'test_url')
+train_path = config.get('URLPATH', 'train_path')
+test_path = config.get('URLPATH', 'test_path')
 
 def data_preprocess(data, type: str):
     
@@ -43,7 +41,6 @@ def data_preprocess(data, type: str):
         features.append(lines)
     return features, label
 if __name__ == '__main__':
-    # train_data = pd.read_csv(train_url, sep=',')
-    # test_data = pd.read_csv(test_url, sep=',')
-    train_features, label = data_preprocess(train_url, 'train')
+    train_features, label = data_preprocess(train_path, 'train')
+    test_features, label = data_preprocess(test_path, "test")
     # test_features, label = data_preprocess(test_data, 'test')
