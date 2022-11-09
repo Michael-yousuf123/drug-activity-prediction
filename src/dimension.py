@@ -7,7 +7,7 @@ from sklearn import manifold
 class DimensionalityReduction(BaseEstimator, TransformerMixin):
     """class to compute dimensionality reduction"""
 
-    def __init__(self, types, K , N):
+    def __init__(self, types, K):
         """function to initialize the instance 
         attributes of the class 
         ------------
@@ -16,23 +16,17 @@ class DimensionalityReduction(BaseEstimator, TransformerMixin):
         types: types of dimensionality reduction
         N: Number of neighbors if type is non linear
         K: Number of components"""
-
-        self.linear = None
-        self.nonlinear = None
         self._types = types
-        self._N = N
         self.K = K
         for idx, item in enumerate(types):
-            for linear in item:
-                if "pca" in linear:
-                    self.pca = PCA(K[idx])
-                if "lda" in linear:
-                    self.lda = LinearDiscriminantAnalysis()
-            for nonlinear in item:
-                if "isomap" in nonlinear:
-                    self.isomap = manifold.Isomap()
-                if "lle" in nonlinear:
-                    self.lle = manifold.LocallyLinearEmbedding()
+            if "pca" in item:
+                self.pca = PCA(K[idx])
+            if "lda" in item:
+                self.lda = LinearDiscriminantAnalysis()
+            if "isomap" in item:
+                self.isomap = manifold.Isomap()
+            if "lle" in item:
+                self.lle = manifold.LocallyLinearEmbedding()
     
     def fit(self, X, y = None):
         """
@@ -63,5 +57,7 @@ class DimensionalityReduction(BaseEstimator, TransformerMixin):
         """
         self.fit(X, y)
         return self.transform(X)
-if __name__ == '__main__':
-    ensemble = DimensionalityReduction(['pca'], [2], [1])
+
+    # edr = DimensionalityReduction(["pca", "lda"], [2, 2])
+
+    # print edr.fit_transform(X,y)

@@ -17,7 +17,11 @@ def data_preprocess(data, type: str):
     """
     A function to retrieve a data from a  given url 
     and then preprocess to store cleaned label and 
-    train dataset into our data directory """
+    train dataset into our data directory 
+    ------------------
+    Parameters:
+    ------------------
+    """
 
     label = []
     features = []
