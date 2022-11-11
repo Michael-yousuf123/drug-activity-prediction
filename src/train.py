@@ -16,16 +16,13 @@ config_path = os.path.join(ROOT_DIR, "config.ini")
 #------------------------------------------------------------
 config = configparser.ConfigParser()
 config.read('config.ini')
-
-
+train_path = config.get('URLPATH', 'train_path')
+test_path = config.get('URLPATH', 'test_path')
 
 def train():
     """
     
     """
-
-    train_path = config.get('URLPATH', 'train_path')
-    test_path = config.get('URLPATH', 'test_path')
     features, labels = data.data_preprocess(train_path, "train")
     test_features, test_labels = data.data_preprocess(test_path, "test")
 
@@ -47,6 +44,7 @@ def train():
     preds = clf.predict(test_reduced_features)
     # calculate & print accuracy
     accuracy = metrics.f1_score(y_valid, preds)
-    print(f"Fold={fold}, Accuracy={accuracy}")
+    print(f"Accuracy={accuracy}")
 
 if __name__ == '__main__':
+    train()
