@@ -2,7 +2,6 @@ import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn import manifold
 
 class DimensionalityReduction(BaseEstimator, TransformerMixin):
     """class to compute dimensionality reduction"""
@@ -16,7 +15,8 @@ class DimensionalityReduction(BaseEstimator, TransformerMixin):
         types: types of dimensionality reduction
         N: Number of neighbors if type is non linear
         K: Number of components"""
-        self._types = types
+        self.pca = None
+        self.lda = None
         self.K = K
         for idx, item in enumerate(types):
             if "pca" in item:
@@ -45,7 +45,18 @@ class DimensionalityReduction(BaseEstimator, TransformerMixin):
         """
         self.fit(X, y)
         return self.transform(X)
+if __name__ == '__main__':
 
-    # edr = DimensionalityReduction(["pca", "lda"], [2, 2])
+    X = [[1, 2, 3], [3, 4, 5], [-1, 4, 1], [-1, -5, 3], [-3, 4, 0] ,[3, -5, -4]]
+    y = [0, 1, 2, 1, 0, 2]
 
-    # print edr.fit_transform(X,y)
+    # edr = DimensionalityReduction(["pca"], [2])
+    # edr.fit(X, y)
+    # print(edr.transform(X))
+     
+    edr = DimensionalityReduction(["pca", "lda"], [2, 2])
+    print(edr.fit_transform(X,y))
+
+    edr = DimensionalityReduction(["pca", "lda"], [2, 2])
+
+    print(edr.fit_transform(X,y))

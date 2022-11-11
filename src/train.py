@@ -3,10 +3,9 @@ from pathlib import Path
 import configparser
 import argparse
 import data
-from dimension import *
+from data import data_preprocess
+from dimension import DimensionalityReduction
 import model_dispatch
-from dimension import *
-from sklearn.model_selection import cross_val_predict
 from sklearn import metrics
 
 # import dataset 
@@ -19,7 +18,7 @@ config.read('config.ini')
 train_path = config.get('URLPATH', 'train_path')
 test_path = config.get('URLPATH', 'test_path')
 
-def train():
+def train(model):
     """
     
     """
@@ -43,8 +42,11 @@ def train():
     # create predictions for validation samples
     preds = clf.predict(test_reduced_features)
     # calculate & print accuracy
-    accuracy = metrics.f1_score(y_valid, preds)
+    accuracy = metrics.f1_score(test_labels, preds)
     print(f"Accuracy={accuracy}")
 
 if __name__ == '__main__':
-    train()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model",type=str)
+    args = parser.parse_args()
+    train(model=args.model)
