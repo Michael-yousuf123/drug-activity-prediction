@@ -23,10 +23,6 @@ class DimensionalityReduction(BaseEstimator, TransformerMixin):
                 self.pca = PCA(K[idx])
             if "lda" in item:
                 self.lda = LinearDiscriminantAnalysis()
-            if "isomap" in item:
-                self.isomap = manifold.Isomap()
-            if "lle" in item:
-                self.lle = manifold.LocallyLinearEmbedding()
     
     def fit(self, X, y = None):
         """
@@ -34,11 +30,7 @@ class DimensionalityReduction(BaseEstimator, TransformerMixin):
         if self.pca is not None:
             self.pca.fit(X)
         if self.lda is not None:
-            self.lda.fit(X, y)
-        if self.isomap is not None:
-            self.isomap.fit(X)
-        if self.lle is not None:
-            self.lle.fit(X)       
+            self.lda.fit(X, y)      
     
     def transform(self, X):
         """
@@ -47,10 +39,6 @@ class DimensionalityReduction(BaseEstimator, TransformerMixin):
             np.array(self.pca.transform(X))
         if self.lda is not None:
             np.array(self.lda.transform(X))
-        if self.isomap is not None:
-            np.array(self.isomap.transform(X))
-        if self.pca is not None:
-            np.array(self.lle.transform(X))
         
     def fit_transform(self, X, y=None):
         """
